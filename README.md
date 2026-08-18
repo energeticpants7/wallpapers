@@ -10,7 +10,7 @@ The `wallpapers.timer` synchronizes the collection every Sunday at 20:30 and pus
 
 ## Gallery
 
-The `pages.yml` workflow builds and deploys a responsive grid gallery to GitHub Pages whenever `main` changes. It includes search, format filters, lazy loading, and a fullscreen viewer.
+The `pages.yml` workflow builds and deploys a masonry gallery to GitHub Pages whenever `main` changes. It includes format filters, lazy loading, original downloads, and a fullscreen viewer.
 
 Check it with:
 

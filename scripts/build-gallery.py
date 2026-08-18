@@ -89,7 +89,8 @@ def main() -> None:
     .filter.active {{ border-color:var(--accent); color:var(--text); }}
     main {{ padding:1.5rem; }}
     .grid {{ columns:4 280px; column-gap:.6rem; }}
-    .item {{ break-inside:avoid; margin-bottom:.6rem; position:relative; overflow:hidden; cursor:pointer; background:var(--surface); }}
+    .item {{ break-inside:avoid; margin-bottom:.6rem; position:relative; overflow:hidden; cursor:pointer; background:var(--surface); transition:transform .2s ease,box-shadow .2s ease; }}
+    .item:hover {{ transform:translateY(-3px) scale(1.01); z-index:1; box-shadow:0 .7rem 1.4rem #0008; }}
     .card-button {{ display:block; width:100%; padding:0; border:0; color:inherit; background:none; cursor:pointer; }}
     .card-button:focus-visible {{ outline:1px solid var(--accent); outline-offset:3px; }}
     .media {{ display:block; overflow:hidden; }}
@@ -116,7 +117,7 @@ def main() -> None:
 </head>
 <body>
   <header>
-    <h1>Wallpapers<span>·</span>Gallery</h1>
+    <h1>energeticpants7<span>·</span>Wallpapers</h1>
     <div class="meta">{count} images<br>personal collection</div>
   </header>
   <section class="controls" aria-label="Gallery filters">

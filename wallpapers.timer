@@ -1,0 +1,10 @@
+[Unit]
+Description=Run the weekly wallpapers repository sync
+
+[Timer]
+OnCalendar=Sun *-*-* 20:30:00
+Persistent=true
+Unit=wallpapers.service
+
+[Install]
+WantedBy=timers.target

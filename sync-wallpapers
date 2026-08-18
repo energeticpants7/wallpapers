@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_dir="$HOME/wallpapers"
+source_dir="$HOME/Pictures/Wallpapers"
+target_dir="$repo_dir/images"
+
+exec 9>"$repo_dir/.wallpapers.lock"
+flock -n 9 || exit 0
+
+git -C "$repo_dir" diff --quiet
+git -C "$repo_dir" diff --cached --quiet
+
+if [ ! -d "$source_dir" ]; then
+  exit 0
+fi
+
+mkdir -p "$target_dir"
+rsync -a --delete \
+  --exclude='.git/' \
+  --exclude='*.bak' \
+  --exclude='*.bak-*' \
+  --exclude='*.bak.*' \
+  --exclude='*~' \
+  "$source_dir/" "$target_dir/"
+
+git -C "$repo_dir" add images
+git -C "$repo_dir" diff --cached --quiet && exit 0
+
+git -C "$repo_dir" commit -m "Weekly wallpaper sync $(date --iso-8601=seconds)"
+
+git -C "$repo_dir" push origin main

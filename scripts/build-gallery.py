@@ -42,7 +42,6 @@ def card(path: Path) -> str:
 <article class="card" data-name="{escape(title.lower())}" data-kind="{kind}">
   <button class="card-button" type="button" aria-label="Open {safe_title}" data-src="{source}" data-title="{safe_title}" data-kind="{kind}">
     <span class="media">{preview}</span>
-    <span class="caption">{safe_title}</span>
   </button>
 </article>
 """
@@ -73,35 +72,36 @@ def main() -> None:
   <meta name="theme-color" content="#0d0d12">
   <title>Wallpapers · {count} items</title>
   <style>
-    :root {{ color-scheme: dark; --bg:#0d0d12; --panel:#15151d; --text:#f4f1f7; --muted:#aaa5b4; --accent:#c8b5ff; --line:#2b2935; }}
+    :root {{ color-scheme:dark; --bg:#08090d; --panel:#12141b; --text:#f8f7fb; --muted:#a8aab8; --accent:#cbb8ff; --line:#ffffff1c; }}
     * {{ box-sizing:border-box; }}
-    body {{ margin:0; min-height:100vh; background:radial-gradient(circle at 20% 0%,#25203a 0,transparent 38rem),var(--bg); color:var(--text); font:15px/1.45 system-ui,sans-serif; }}
-    header {{ max-width:1500px; margin:auto; padding:34px 24px 22px; display:flex; align-items:end; justify-content:space-between; gap:20px; flex-wrap:wrap; }}
-    h1 {{ margin:0; font-size:clamp(1.8rem,4vw,3.4rem); letter-spacing:-.05em; }}
-    .subtitle {{ color:var(--muted); margin:.35rem 0 0; }}
-    .tools {{ max-width:1500px; margin:auto; padding:0 24px 24px; display:flex; gap:10px; flex-wrap:wrap; position:sticky; top:0; z-index:2; background:linear-gradient(var(--bg) 72%,transparent); }}
-    input, .filter {{ border:1px solid var(--line); background:var(--panel); color:var(--text); border-radius:999px; padding:10px 15px; font:inherit; }}
-    input {{ min-width:min(100%,320px); flex:1; outline:none; }}
-    input:focus {{ border-color:var(--accent); box-shadow:0 0 0 3px #c8b5ff22; }}
-    .filter {{ cursor:pointer; }}
+    body {{ margin:0; min-height:100vh; background:radial-gradient(ellipse 70% 45% at 50% -10%,#4a386e 0,transparent 68%),radial-gradient(circle at 100% 35%,#172f42 0,transparent 32rem),var(--bg); color:var(--text); font:15px/1.45 system-ui,-apple-system,BlinkMacSystemFont,sans-serif; }}
+    header {{ max-width:1800px; margin:auto; padding:clamp(42px,7vw,100px) 32px 34px; }}
+    h1 {{ margin:0; font-size:clamp(2.5rem,7vw,6.5rem); line-height:.95; letter-spacing:-.075em; background:linear-gradient(120deg,#fff 20%,#d7c8ff 60%,#91c9e8); -webkit-background-clip:text; background-clip:text; color:transparent; }}
+    .subtitle {{ color:var(--muted); margin:18px 0 0; font-size:clamp(.9rem,1.4vw,1.05rem); letter-spacing:.02em; }}
+    .tools {{ max-width:1800px; margin:auto; padding:0 32px 32px; display:flex; gap:10px; flex-wrap:wrap; position:sticky; top:0; z-index:2; background:linear-gradient(#08090df2 55%,transparent); backdrop-filter:blur(12px); }}
+    input, .filter {{ border:1px solid var(--line); background:#ffffff0d; color:var(--text); border-radius:999px; padding:12px 17px; font:inherit; backdrop-filter:blur(16px); }}
+    input {{ min-width:min(100%,360px); flex:1; outline:none; }}
+    input::placeholder {{ color:#a8aab899; }}
+    input:focus {{ border-color:var(--accent); box-shadow:0 0 0 4px #cbb8ff1c; }}
+    .filter {{ cursor:pointer; transition:background .2s,border-color .2s,transform .2s; }}
+    .filter:hover {{ transform:translateY(-1px); border-color:#ffffff40; }}
     .filter.active {{ background:var(--accent); color:#211c2d; border-color:var(--accent); }}
-    main {{ max-width:1500px; margin:auto; padding:0 24px 50px; }}
-    .grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:14px; }}
+    main {{ max-width:1800px; margin:auto; padding:0 32px 72px; }}
+    .grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:18px; }}
     .card {{ min-width:0; }}
-    .card-button {{ display:block; width:100%; padding:0; border:0; color:inherit; text-align:left; background:var(--panel); border-radius:16px; overflow:hidden; cursor:pointer; transition:transform .2s,box-shadow .2s; }}
-    .card-button:hover {{ transform:translateY(-3px); box-shadow:0 12px 30px #0007; }}
-    .media {{ display:block; aspect-ratio:16/10; background:#09090d; overflow:hidden; }}
-    .media img, .media video {{ width:100%; height:100%; display:block; object-fit:cover; transition:transform .35s; }}
-    .card-button:hover .media img, .card-button:hover .media video {{ transform:scale(1.04); }}
-    .caption {{ display:block; overflow:hidden; padding:11px 12px 13px; color:var(--muted); text-overflow:ellipsis; white-space:nowrap; }}
-    .empty {{ color:var(--muted); text-align:center; padding:60px 10px; display:none; }}
-    dialog {{ width:min(94vw,1200px); max-height:92vh; padding:0; border:1px solid var(--line); border-radius:18px; background:#101017; color:var(--text); box-shadow:0 24px 100px #000b; }}
-    dialog::backdrop {{ background:#000b; backdrop-filter:blur(8px); }}
-    .lightbox {{ position:relative; padding:18px; }}
-    .lightbox img, .lightbox video {{ width:100%; max-height:78vh; object-fit:contain; display:block; border-radius:10px; background:#08080b; }}
-    .lightbox h2 {{ font-size:1rem; margin:12px 0 0; color:var(--muted); }}
-    .close {{ position:absolute; top:12px; right:12px; border:0; border-radius:50%; width:36px; height:36px; cursor:pointer; background:#000a; color:white; font-size:1.3rem; }}
-    @media (max-width:600px) {{ header, .tools, main {{ padding-left:14px; padding-right:14px; }} .grid {{ grid-template-columns:repeat(auto-fill,minmax(145px,1fr)); gap:9px; }} }}
+    .card-button {{ display:block; width:100%; padding:0; border:1px solid var(--line); color:inherit; text-align:left; background:var(--panel); border-radius:22px; overflow:hidden; cursor:pointer; box-shadow:0 10px 30px #0003; transition:transform .3s,box-shadow .3s,border-color .3s; }}
+    .card-button:hover {{ transform:translateY(-6px); border-color:#ffffff45; box-shadow:0 22px 45px #0008,0 0 28px #bda7ff18; }}
+    .media {{ display:block; aspect-ratio:16/10; background:#090a0f; overflow:hidden; }}
+    .media img, .media video {{ width:100%; height:100%; display:block; object-fit:cover; transition:transform .6s cubic-bezier(.2,.7,.2,1),filter .3s; }}
+    .card-button:hover .media img, .card-button:hover .media video {{ transform:scale(1.06); filter:saturate(1.08) brightness(1.06); }}
+    .empty {{ color:var(--muted); text-align:center; padding:80px 10px; display:none; }}
+    dialog {{ width:min(94vw,1400px); max-height:92vh; padding:0; border:1px solid #ffffff30; border-radius:24px; background:#101219; color:var(--text); box-shadow:0 30px 120px #000d; }}
+    dialog::backdrop {{ background:#000c; backdrop-filter:blur(14px); }}
+    .lightbox {{ position:relative; padding:20px; }}
+    .lightbox img, .lightbox video {{ width:100%; max-height:78vh; object-fit:contain; display:block; border-radius:14px; background:#08090d; }}
+    .close {{ position:absolute; top:14px; right:14px; z-index:1; border:1px solid #ffffff30; border-radius:50%; width:40px; height:40px; cursor:pointer; background:#08090dcc; color:white; font-size:1.4rem; line-height:1; }}
+    .close:hover {{ background:#ffffff25; }}
+    @media (max-width:700px) {{ header, .tools, main {{ padding-left:16px; padding-right:16px; }} .grid {{ grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:11px; }} .card-button {{ border-radius:16px; }} }}
   </style>
 </head>
 <body>
@@ -118,7 +118,7 @@ def main() -> None:
     <section id="grid" class="grid">{cards}</section>
     <p id="empty" class="empty">No wallpapers match your search.</p>
   </main>
-  <dialog id="viewer"><div class="lightbox"><button class="close" type="button" aria-label="Close">×</button><div id="preview"></div><h2 id="viewer-title"></h2></div></dialog>
+  <dialog id="viewer"><div class="lightbox"><button class="close" type="button" aria-label="Close">×</button><div id="preview"></div></div></dialog>
   <script>
     const cards = [...document.querySelectorAll('.card')];
     const search = document.querySelector('#search');
@@ -142,11 +142,9 @@ def main() -> None:
     }}));
     const viewer = document.querySelector('#viewer');
     const preview = document.querySelector('#preview');
-    const viewerTitle = document.querySelector('#viewer-title');
     document.querySelectorAll('.card-button').forEach(button => button.addEventListener('click', () => {{
       const tag = button.dataset.kind === 'video' ? 'video' : 'img';
       preview.innerHTML = `<${{tag}} src="${{button.dataset.src}}" ${{tag === 'video' ? 'controls autoplay loop' : ''}}></${{tag}}>`;
-      viewerTitle.textContent = button.dataset.title;
       viewer.showModal();
     }}));
     document.querySelector('.close').addEventListener('click', () => viewer.close());
